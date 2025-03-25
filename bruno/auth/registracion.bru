@@ -1,0 +1,33 @@
+meta {
+  name: registracion
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+       "email": "teset@example.co2m",
+        "password": "password123"
+  }
+}
+
+tests {
+  test("should return 201 status code", () => {
+    expect(res.status).to.equal(201);
+  });
+  
+  test("should return access_token", () => {
+     expect(res.body).to.have.property("access_token").that.is.a("string");
+  });
+  
+  test("should return 409 for Conflict", () => {
+    expect(res.status).to.equal(409);
+    expect(res.body).to.have.property("error");
+  });
+}
