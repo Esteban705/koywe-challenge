@@ -5,7 +5,8 @@ meta {
 }
 
 get {
-  url: {{BASE_URL}}quote/{{quoteId}}
+  url: {{BASE_URL}}quote/{{CREATEDQUOTE}}67e4714844fdcb11fc8f3976
+  body: none
   auth: bearer
 }
 
@@ -13,8 +14,12 @@ headers {
   Authorization: Bearer {{access_token}}
 }
 
+auth:bearer {
+  token: {{AUTHTOKEN}}
+}
+
 tests {
   test("should return 200 status code", () => {
     expect(res.status).to.equal(200);
   });
-} 
+}

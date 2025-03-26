@@ -17,6 +17,10 @@ body:json {
   }
 }
 
+script:post-response {
+  bru.setVar("AUTHTOKEN", res.body.access_token)
+}
+
 tests {
   test("should return 201 status code", () => {
     expect(res.status).to.equal(201);

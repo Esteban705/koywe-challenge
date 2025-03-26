@@ -36,10 +36,10 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, userId: user._id };
     
     const userResponse: UserResponseDto = {
-      id: user.id,
+      id: user._id.toString(),
       email: user.email,
     };
 

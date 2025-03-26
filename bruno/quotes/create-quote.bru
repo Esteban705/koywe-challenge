@@ -14,17 +14,26 @@ headers {
   Authorization: Bearer {{access_token}}
 }
 
+auth:bearer {
+  token: {{AUTHTOKEN}}
+}
+
 body:json {
   {
-    "amount": 1000,
+    "amount": 1200,
     "from": "USD",
     "to": "EUR",
     "currency": "USD"
   }
 }
 
+script:post-response {
+  
+  bru.setVar("CREATEDQUOTE", res.body._id)
+}
+
 tests {
   test("should return 201 status code", () => {
     expect(res.status).to.equal(201);
   });
-} 
+}

@@ -12,9 +12,13 @@ post {
 
 body:json {
   {
-       "email": "teset@example.co2m",
+       "email": "teset@example.cos2m",
         "password": "password123"
   }
+}
+
+script:post-response {
+  bru.setVar("AUTHTOKEN", res.body.token)
 }
 
 tests {
