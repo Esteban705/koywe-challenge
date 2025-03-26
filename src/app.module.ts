@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users.module';
 import { QuotesModule } from './modules/quotes.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { TestModule } from 'test/e2e/test.module';
 @Module({
   imports: [
     // Configuración global
@@ -28,6 +29,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     AuthModule,
     UsersModule,
     QuotesModule,
+    TestModule,
     CacheModule.register({
       useFactory: () => ({
         store: 'memory',

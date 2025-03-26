@@ -4,10 +4,11 @@ import { Model } from 'mongoose';
 import { User } from '../models/entities/user.schema';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { UsersRepository } from 'src/dal/users.repositoy';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(private userRepository: UsersRepository) {}
 
   async create(email: string, password: string): Promise<{ user: Partial<User>, token: string }> {
     const existingUser = await this.findByEmail(email);
@@ -16,12 +17,12 @@ export class UsersService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new this.userModel({
+    const newUser ={
       email,
       password: hashedPassword,
-    });
+    };
     
-    const savedUser = await newUser.save();
+    const savedUser = await this.userRepository.create(newUser);
     const token = this.generateToken(savedUser._id.toString());
     
     // Excluimos el password del objeto usuario
@@ -40,10 +41,10 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email }).exec();
+    return this.userRepository.findByEmail(email);
   }
 
-  async findById(id: string): Promise<User | null> {
-    return this.userModel.findById(id).exec();
-  }
+    async findById(id: string): Promise<User | null> {
+      return this.userRepository.findById(id);
+    }
 } 

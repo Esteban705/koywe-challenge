@@ -10,7 +10,7 @@ export class UsersRepository {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User & UserDocument> {
     const createdUser = new this.userModel(createUserDto);
     return createdUser.save();
   }

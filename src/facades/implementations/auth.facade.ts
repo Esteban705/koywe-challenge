@@ -3,7 +3,7 @@ import { UsersService } from "src/bll/users.service";
 import { CreateUserDto } from "src/models/dtos/create-user.dto";
 import { User } from "src/models/entities/user.schema";
 import { IAuthFacade } from "../interfaces/auth.facade.interface";
-import { Injectable, UnauthorizedException, BadRequestException } from "@nestjs/common";
+import { Injectable, UnauthorizedException, BadRequestException, ConflictException } from "@nestjs/common";
 import { LoginUserDto } from "src/models/dtos/login-user.dto";
 
 @Injectable()
@@ -18,7 +18,7 @@ export class AuthFacade implements IAuthFacade {
       return await this.usersService.create(createUserDto.email, createUserDto.password);
     } catch (error) {
       if (error.message.includes('ya está registrado')) {
-        throw new BadRequestException('El email ya está registrado');
+        throw new ConflictException('El email ya está registrado');
       }
       throw new BadRequestException('Error al registrar el usuario');
     }
